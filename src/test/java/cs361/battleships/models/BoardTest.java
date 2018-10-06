@@ -11,4 +11,5 @@ public class BoardTest {
         Board board = new Board();
         assertFalse(board.placeShip(new Ship("MINESWEEPER"), 11, 'C', true));
     }
+
 }
