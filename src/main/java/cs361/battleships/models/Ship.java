@@ -14,6 +14,9 @@ public class Ship {
 	}
 
 	public Ship(String kind) {
+		if ((kind != "MINESWEEPER")&&(kind != "DESTROYER")&&(kind != "BATTLESHIP")){
+			kind = "";
+		}
 		shipType = kind;
 		occupiedSquares = new ArrayList<>();
 	}

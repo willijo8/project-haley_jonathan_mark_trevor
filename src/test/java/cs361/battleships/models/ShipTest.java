@@ -11,26 +11,31 @@ public class ShipTest {
     @Test
     public void testNewShip_Valid_MINESWEEPER() {
         Ship minesweeper = new Ship("MINESWEEPER");
+        assertEquals(minesweeper.getShipType(), "MINESWEEPER");
     }
 
     @Test
     public void testNewShip_Valid_DESTROYER() {
         Ship destroyer = new Ship("DESTROYER");
+        assertEquals(destroyer.getShipType(), "DESTROYER");
     }
 
     @Test
     public void testNewShip_Valid_BATTLESHIP() {
         Ship battleship = new Ship("BATTLESHIP");
+        assertEquals(battleship.getShipType(), "BATTLESHIP");
     }
 
     @Test
     public void testNewShip_Invalid() {
         Ship bad = new Ship("blorp");
+        assertEquals(bad.getShipType(),"");
     }
 
     @Test
     public void testNewShip_DefaultConstructor() {
         Ship empty = new Ship();
+        assertEquals(empty.getShipType(),"");
     }
 
     @Test
