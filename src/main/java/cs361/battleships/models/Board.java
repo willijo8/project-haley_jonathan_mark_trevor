@@ -13,29 +13,44 @@ public class Board {
 	 */
 	public Board() {
 		// TODO Implement
+		// Is anything needed for default constructor?
 	}
 
 	/*
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
 	public boolean placeShip(Ship ship, int x, char y, boolean isVertical) {
-		//Need to implement bound validation, waiting on Ship class
+
+
+		// Need to generate occupied squares for this to work properly.
+		List<Square> shipPlacement = ship.getOccupiedSquares();
+
+		//Bounds validation on ship
+		for (Square place: shipPlacement) {
+			if (place.getRow() >= 10 || place.getColumn() >= 'j') {
+				return false;
+			}
+		}
 
 		//validation that ship does not conflict with other ships
 		// ***Needs to be modified for all squares occupied by ship
-		for (Ship allShips: ships) {
+		// ***Need double checking on this code, feels like there should be a better way to do this
+		for (Ship allShips: this.ships) {
 			List<Square> occupied = allShips.getOccupiedSquares();
 			for (Square occu: occupied) {
-				if (occu.getRow() == x && occu.getColumn() == y) {
-					return false;
+				for (Square place: shipPlacement) {
+					if (occu.getRow() == place.getRow() && occu.getColumn() == place.getColumn()) {
+						return false;
+					}
 				}
 			}
 		}
 
 		//store ship in list of ships
-		ships.add(ship);
+		this.ships.add(ship);
 
-		return false;
+		//return true since all validation has been passed.
+		return true;
 	}
 
 	/*
@@ -54,7 +69,7 @@ public class Board {
 		}
 
 		//ensure attack location has not been made before
-		for (Result allResults: attacks) {
+		for (Result allResults: this.attacks) {
 			if (allResults.getLocation().getColumn() == location.getColumn() && allResults.getLocation().getRow() == location.getRow()) {
 				atackResult.setResult(AtackStatus.INVALID);
 				return atackResult;
@@ -66,7 +81,7 @@ public class Board {
 
 		//Check for ship at attack location
 		// ***this currently only checks for hit and not sunk or surrender
-		for (Ship ship: ships) {
+		for (Ship ship: this.ships) {
 			List<Square> occupied = ship.getOccupiedSquares();
 			for (Square occu: occupied) {
 				if (occu.getRow() == x && occu.getColumn() == y) {
@@ -77,25 +92,23 @@ public class Board {
 				}
 			}
 		}
-		attacks.add(atackResult);
+		this.attacks.add(atackResult);
 		return atackResult;
 	}
 
 	public List<Ship> getShips() {
-		//TODO implement
-		return null;
+		return this.ships;
 	}
 
 	public void setShips(List<Ship> ships) {
-		//TODO implement
+		this.ships = ships;
 	}
 
 	public List<Result> getAttacks() {
-		//TODO implement
-		return null;
+		return this.attacks;
 	}
 
 	public void setAttacks(List<Result> attacks) {
-		//TODO implement
+		this.attacks = attacks;
 	}
 }
